@@ -1,37 +1,32 @@
 import re
+from functools import reduce
 
 
 def solve(inputs) -> int:
-    sum = 0
-    for input_ in inputs:
-        sum += solve_input(input_)
-    return sum
+    return reduce(sum, [solve_input(input_) for input_ in inputs])
 
 
-tags = ["red", "green", "blue"]
-
-
-def solve_input(input: str):
+def solve_input(input_: str):
     dict_ = {"red": 0, "green": 0, "blue": 0}
-    parts = input.split(":")
-    id_ = int(parts[0][4:])
+    parts = input_.split(":")
     games = parts[1].split(";")
     for game in games:
-        for tag in tags:
+        for tag in ["red", "green", "blue"]:
             count = extract_tag(game, tag)
-            if dict_[tag] < count:
-                dict_[tag] = count
-    pow = 1
-    for item in dict_.values():
-        pow *= item
-    return pow
+            dict_[tag] = max(dict_[tag], count)
+    return reduce(multiply, dict_.values(), 1)
+
+
+def multiply(a, b):
+    return a * b
+
+
+def sum(a, b):
+    return a + b
 
 
 def extract_tag(game, tag):
-    pattern = re.compile(rf"(\d+)\s{tag}")
-    result = pattern.search(game)
-    if not result:
-        return 0
-    if item := result.group(1):
+    result = re.search(rf"(\d+)\s{tag}", game)
+    if result and (item := result.group(1)):
         return int(item)
     return 0
