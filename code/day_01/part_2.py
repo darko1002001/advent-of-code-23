@@ -1,11 +1,5 @@
-import re
-
-
 def solve(inputs) -> int:
-    sum = 0
-    for input in inputs:
-        sum += calculate_input(input)
-    return sum
+    return sum((calculate_input(input_) for input_ in inputs))
 
 
 items = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
