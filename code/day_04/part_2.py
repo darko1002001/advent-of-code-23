@@ -5,12 +5,15 @@ from collections import defaultdict
 def solve(inputs) -> int:
     dict_ = dict(read_card(card) for card in inputs)
     totals = defaultdict(int)
-    for index in range(1, len(inputs) + 1):
-        winnings = dict_[index]
+    for index, winnings in dict_.items():
         copies = totals[index]
         totals[index] += 1
-        for next_ in range(index + 1, index + winnings + 1):
-            totals[next_] += copies + 1
+        totals.update(
+            {
+                next_: totals[next_] + copies + 1
+                for next_ in range(index + 1, index + winnings + 1)
+            }
+        )
     return sum(totals.values())
 
 
