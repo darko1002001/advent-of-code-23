@@ -12,10 +12,6 @@ def read_card(input_: str):
     pattern = re.compile(r"(\d+)")
     winning_numbers = [match.group(0) for match in pattern.finditer(winning)]
     current_numbers = [match.group(0) for match in pattern.finditer(current)]
-    won_count = sum([1 if num in winning_numbers else 0 for num in current_numbers])
-    if won_count == 0:
-        return 0
-    score = 1
-    for count in range(0, won_count - 1):
-        score *= 2
-    return score
+    common_numbers = set(winning_numbers).intersection(current_numbers)
+    won_count = len(common_numbers)
+    return 1 << won_count - 1 if won_count > 0 else 0
