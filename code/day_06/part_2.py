@@ -5,11 +5,8 @@ def read(inputs) -> tuple[int, int]:
 
 
 def find_winning(record):
-    time, distance = record
     left_range = binary_search_left(record)
-    print(left_range)
     right_range = binary_search_right(record)
-    print(left_range, right_range)
     return right_range - left_range + 1
 
 
