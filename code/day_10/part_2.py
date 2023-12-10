@@ -75,7 +75,6 @@ def solve(inputs) -> int:
     path = [start] + polygon + [b[0]]
 
     p = Polygon(path)
-    p.simplify(1)
     count = 0
     for i in range(len(inputs)):
         for j in range(len(inputs[0])):
