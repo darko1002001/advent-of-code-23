@@ -17,15 +17,8 @@ def find_empty(inputs):
     return filled_rows, filled_cols, galaxies
 
 
-def create_range(i: int, j: int):
-    if i < j:
-        return range(i, j)
-    else:
-        return range(i, j, -1)
-
-
 def extra_space(i, j, filled) -> int:
-    return sum([0 if filled[index] else 1 for index in create_range(i, j)])
+    return sum([0 if filled[index] else 1 for index in range(min(i, j), max(i, j))])
 
 
 def distance(pair, filled_rows, filled_cols):
